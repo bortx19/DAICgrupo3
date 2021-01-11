@@ -1,0 +1,184 @@
+import time
+from grove.gpio import GPIO
+from datetime import datetime
+
+    
+buzzer = GPIO(5, GPIO.OUT)
+led1 = GPIO (16, GPIO.OUT)
+led2 = GPIO (18, GPIO.OUT)
+led3 = GPIO (26, GPIO.OUT)
+
+button1 = GPIO(22, GPIO.IN)
+button2 = GPIO(24, GPIO.IN)
+
+contador = 0
+contador1 = 0
+flag1 = 0
+flag2 = 0
+flag3 = 0
+segundos1=0
+
+while True:        
+    if button1.read():
+        buzzer.write(1)
+        time.sleep(0.2)
+        
+        if button1.read():
+            print("MAL")#Por pulsar demasiado tiempo
+        else:
+            if contador == 3:
+                contador = 0
+                print(contador)
+
+            else:
+                contador = contador + 1
+                print(contador)
+                flag1 = 0
+                flag2 = 0
+                flag3 = 0
+                segundos1 = 0
+    else:
+        buzzer.write(0)
+    
+    if contador == 0:
+        led1.write(0)
+        led2.write(0)
+        led3.write(0)
+        buzzer.write(0)
+        
+    elif contador == 1:
+        if flag1 == 0:
+            led1.write(1)
+            led2.write(0)
+            led3.write(0)
+            buzzer.write(0)
+        
+            if button2.read(): #nos ponemos las masc1.
+                instanteInicial1 = datetime.now()
+                flag1 = 1
+        
+        elif flag1 == 1:
+            instanteFinal1 = datetime.now()
+            tiempo1 = instanteFinal1 - instanteInicial1 # Devuelve un objeto timedelta
+            segundos1 = tiempo1.seconds
+        
+            if segundos1 < 12600:
+                if contador1 >= 140:
+                    contador1 = 0
+                elif contador1 < 140:
+                    contador1 = contador1 + 1
+                
+                if contador1 <= 70:
+                    led1.write(0)
+                elif contador1 > 70:
+                    led1.write(1)
+                    
+            elif segundos1 >= 12600 and segundos1 < 14400:
+                if contador1 >= 20:
+                    contador1 = 0
+                elif contador1 < 20:
+                    contador1 = contador1 + 1
+                
+                if contador1 <= 10:
+                    led1.write(0)
+                elif contador1 > 10:
+                    led1.write(1)
+                
+            elif segundos1 >= 14400:
+                buzzer.write(1)
+                time.sleep(5)
+                buzzer.write(0)
+                segundos1 = 0
+                flag1 = 0
+    
+    elif contador == 2:
+        if flag2 == 0:
+            led1.write(0)
+            led2.write(1)
+            led3.write(0)
+            buzzer.write(0)
+       
+            if button2.read(): #nos ponemos las masc2.
+                instanteInicial1 = datetime.now()
+                flag2 = 1
+        
+        if flag2 == 1:
+            instanteFinal1 = datetime.now()
+            tiempo1 = instanteFinal1 - instanteInicial1 # Devuelve un objeto timedelta
+            segundos1 = tiempo1.seconds
+        
+            if segundos1 < 12600:
+                if contador1 >= 140:
+                    contador1 = 0
+                elif contador1 < 140:
+                    contador1 = contador1 + 1
+                
+                if contador1 <= 70:
+                    led2.write(0)
+                elif contador1 > 70:
+                    led2.write(1)
+                    
+            elif segundos1 >= 12600 and segundos1 < 14400:
+                if contador1 >= 20:
+                    contador1 = 0
+                elif contador1 < 20:
+                    contador1 = contador1 + 1
+                
+                if contador1 <= 10:
+                    led2.write(0)
+                elif contador1 > 10:
+                    led2.write(1)
+                
+            elif segundos1 >= 14400:
+                buzzer.write(1)
+                time.sleep(5)
+                buzzer.write(0)
+                segundos1 = 0
+                flag2 = 0
+       
+    elif contador == 3:
+        if flag3 == 0:
+            led1.write(0)
+            led2.write(0)
+            led3.write(1)
+            buzzer.write(0)
+        
+            if button2.read(): #nos ponemos las masc3.
+                instanteInicial1 = datetime.now()
+                flag3 = 1
+        
+        if flag3 == 1:
+            instanteFinal1 = datetime.now()
+            tiempo1 = instanteFinal1 - instanteInicial1 # Devuelve un objeto timedelta
+            segundos1 = tiempo1.seconds
+        
+            if segundos1 < 27000:
+                if contador1 >= 140:
+                    contador1 = 0
+                elif contador1 < 140:
+                    contador1 = contador1 + 1
+                
+                if contador1 <= 70:
+                    led3.write(0)
+                elif contador1 > 70:
+                    led3.write(1)
+                    
+            elif segundos1 >= 27000 and segundos1 < 28800:
+                if contador1 >= 20:
+                    contador1 = 0
+                elif contador1 < 20:
+                    contador1 = contador1 + 1
+                
+                if contador1 <= 10:
+                    led3.write(0)
+                elif contador1 > 10:
+                    led3.write(1)
+                
+            elif segundos1 >= 28800:
+                buzzer.write(1)
+                time.sleep(5)
+                buzzer.write(0)
+                segundos1 = 0
+                flag3 = 0
+        
+    time.sleep(0.1) ###############################
