@@ -1,75 +1,12 @@
-# DAICgrupo3
+Consiste en una aplicación para controlar el tiempo que llevas puesta cualquiera de los 3 diferentes tipos de mascarillas utilizadas.
+Con el botón 1 seleccionas cuál de las mascarillas vas a usar, y con el segundo botón comienza el tiempo de uso que durará dicha mascarilla.
+Ambos botones existen físicamente en la placa y también están disponibles desde el móvil.
+Con los 3 diferentes leds indicas cual es la mascarilla seleccionada. Una vez haya comenzado el tiempo, el led parpadea con baja frecuencia. A media hora del final, la frecuencia aumenta. Cuando el tiempo termina, suena durante 5 segundos una alarma que avisa al usuario de que debe cambiar de mascarilla.
+El tiempo de uso de la primera y segunda mascarilla (mascarilla higiénica y mascarilla quirúrgica) es de 4 horas. El de la tercera mascarilla (EPI) es de 8 horas.
 
-import time
-from grove.gpio import GPIO
+Para el video de presentación del proyecto hemos bajado el tiempo de uso de 4 horas a 30 segundos para comprobar que el proyecto cumple su función. Destacar también que sólo disponiamos de 1 led.
 
-buzzer = GPIO(5, GPIO.OUT)
-led1 = GPIO (16, GPIO.OUT)
-led2 = GPIO (18, GPIO.OUT)
-led3 = GPIO (26, GPIO.OUT)
-
-button1 = GPIO(22, GPIO.IN)
-button2 = GPIO(24, GPIO.IN)
-
-contador = 0
+https://drive.google.com/file/d/15SiTK6WbjUqSiE6uALH-uGIHtPTh2PjE/view?usp=drivesdk
 
 
-while True:        
-    if button1.read():
-        buzzer.write(1)
-        time.sleep(0.2)
-        
-        if button1.read():
-            print("MAL")
-        else:
-            if contador == 3:
-                contador = 0
-                print(contador)
 
-            else:
-                contador = contador + 1
-                print(contador)
-    else:
-        buzzer.write(0)
-    
-    if contador == 0:
-        
-        led1.write(0)
-        led2.write(0)
-        led3.write(0)
-        buzzer.write(0)
-        
-    elif contador == 1:
-        
-        led1.write(1)
-        led2.write(0)
-        led3.write(0)
-        buzzer.write(0)
-        
-        #if button2.read():
-        #while contadortiempo1 > 600s:
-        #empezar la cuenta atras del contadortiempo1
-        #parpadeo del led1
-        
-        #while contadortiempo1 >0 and <=600s:
-        #continuar con el contadortiempo1 hasta q llegue a 0
-        #aumentar el parpadeo del led
-        
-        #if contadortiempo1 == 0:
-        #buzzer.write(1)
-        #contador = 0
-    
-    elif contador == 2:
-        led1.write(0)
-        led2.write(1)
-        led3.write(0)
-        buzzer.write(0)
-       
-    elif contador == 3:
-        led1.write(0)
-        led2.write(0)
-        led3.write(1)
-        buzzer.write(0)
-    
-    time.sleep(0.1)
-   
